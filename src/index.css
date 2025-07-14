@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* .active {
+  @apply hover:before:w-full before:w-0 before:h-[2.5px] before:bg-emerald-600 before:absolute before:bottom-[-2px] before:start-0 before:transition-[width] before:duration-300;
+} */
+
+.active {
+  color: black;
+  font-weight: 500;
+}
+.myActive {
+  position: relative;
+}
+.myActive:hover {
+  color: rgba(0, 0, 0, 0.8);
+  transition: color 0.5s ease;
+}
+/* .active::before {
+  content: "";
+  width: 0;
+  height: 2.5px;
+  background-color: #059669;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  transition: width 0.3s ease;
+} */
+/* .active:hover::before {
+  width: 100%;
+} */
+/* ! ****** btn transition ****** */
+/* .product .btn {
+  transition: transform 1s, opacity 1s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.product:hover .btn {
+  opacity: 1;
+  transform: translateY(0%);
+} */
