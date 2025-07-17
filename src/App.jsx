@@ -21,8 +21,10 @@ import WishlistContextProvider from "./components/Context/WishlistContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CheckOut from "./components/CheckOut/CheckOut";
 import AllOrders from "./components/AllOrders/AllOrders";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ForgetPassword from "./components/Authentication/ForgetPassword/ForgetPassword";
+import VerifyResetCode from "./components/Authentication/VerifyResetCode/VerifyResetCode";
+import ResetPassword from "./components/Authentication/ResetPassword/ResetPassword";
 
 let queryClient = new QueryClient();
 function App() {
@@ -113,6 +115,9 @@ function App() {
             </ProtectRoute>
           ),
         },
+        { path: "/forgetPassword", element: <ForgetPassword /> },
+        { path: "/verifyResetCode", element: <VerifyResetCode /> },
+        { path: "/resetPassword", element: <ResetPassword /> },
         { path: "register", element: <Register /> },
         { path: "login", element: <Login /> },
         { path: "*", element: <NotFound /> },

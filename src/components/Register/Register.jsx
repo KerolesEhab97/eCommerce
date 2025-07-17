@@ -67,13 +67,13 @@ export default function Register() {
     onSubmit: submitForm,
   });
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <div className=" flex min-h-screen items-start justify-center p-4 sm:px-6 lg:px-8">
         <div className="w-full space-y-8">
           <div className=" rounded-md p-6">
-            <h2 className="my-3 text-3xl font-bold tracking-tight text-green-800">
+            <h2 className="my-3 md:text-3xl text-2xl font-bold tracking-tight text-green-800">
               Register Now
             </h2>
             <form onSubmit={formik.handleSubmit} className="space-y-6 mt-5">
@@ -263,7 +263,7 @@ export default function Register() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md border border-transparent bg-green-700 py-2.5 px-4 text-sm font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                  className="mt-8 flex w-full justify-center rounded-md border border-transparent bg-green-700 hover:bg-green-600 transition-colors py-2.5 px-4 text-[15px] font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
                 >
                   {isLoading ? (
                     <i class="fa-duotone fa-solid fa-spinner fa-spin py-0.5"></i>

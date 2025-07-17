@@ -1,32 +1,33 @@
 import React, { useContext } from "react";
-import style from "./Login.module.css";
+import style from "./ResetPassword.module.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
+import toast from "react-hot-toast";
 
-export default function Login() {
+export default function ResetPassword() {
   let { userLogin, setUserLogin } = useContext(UserContext);
   const [counter, setCounter] = useState(0);
 
   const [errMsg, setErrMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   let Navigate = useNavigate();
-  function submitForm(val) {
+  function submitNewPassword(val) {
     setIsLoading(true);
+    toast.loading("Loading....", { duration: 2000, position: "top-center" });
     axios
-      .post("https://ecommerce.routemisr.com/api/v1/auth/signin", val)
+      .put(`https://ecommerce.routemisr.com/api/v1/auth/resetPassword`, val)
       .then((response) => {
         setIsLoading(false);
-        // console.log(response.data.token);
-        if (response.data.message === "success") {
-          localStorage.setItem("userToken", response?.data?.token);
+        console.log(response);
+        if (response) {
+          toast.success("Password Changed", { position: "top-center" });
           //! *******
-          setUserLogin(response?.data?.token);
-          Navigate("/");
+          Navigate("/login");
         }
       })
       .catch((error) => {
@@ -38,8 +39,8 @@ export default function Login() {
 
   let validation = Yup.object().shape({
     email: Yup.string().required("email is required").email("invalid mail"),
-    password: Yup.string()
-      .required("Password is required")
+    newPassword: Yup.string()
+      .required("new password is required")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "Password must be at least 8 characters with uppercase, lowercase, number, and special character."
@@ -49,10 +50,10 @@ export default function Login() {
   let formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
+      newPassword: "",
     },
     validationSchema: validation,
-    onSubmit: submitForm,
+    onSubmit: submitNewPassword,
   });
 
   useEffect(() => {}, []);
@@ -61,8 +62,8 @@ export default function Login() {
       <div className=" flex min-h-screen items-start justify-center p-4 sm:px-6 lg:px-8">
         <div className="w-full space-y-8">
           <div className=" rounded-md p-6">
-            <h2 className="my-3 md:text-3xl text-2xl font-bold tracking-tight text-green-800">
-              Login Now
+            <h2 className="my-3 md:text-3xl text-2xl md:font-bold font-medium tracking-tight text-green-800">
+              Reset Password
             </h2>
             <form onSubmit={formik.handleSubmit} className="space-y-6">
               <div>
@@ -103,25 +104,25 @@ export default function Login() {
 
               <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="newPassword"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Password
+                  rePassword
                 </label>
                 <div className="mt-1">
                   <input
-                    value={formik.values.password}
+                    value={formik.values.newPassword}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    name="password"
-                    type="password"
-                    id="password"
-                    autoComplete="password"
+                    name="newPassword"
+                    type="newPassword"
+                    id="newPassword"
+                    autoComplete="newPassword"
                     className="px-2 py-2 mt-1 block w-full rounded-md border border-gray-300 focus:border-green-700 focus:outline-none focus:ring-green-500 sm:text-sm"
                   />
                 </div>
                 {/* alert from tailwindflex.com */}
-                {formik.errors.password && formik.touched.password ? (
+                {formik.errors.newPassword && formik.touched.newPassword ? (
                   <div className="pt-1 text-lg flex items-center  max-w-lg">
                     <svg
                       viewBox="0 0 24 24"
@@ -133,30 +134,23 @@ export default function Login() {
                       />
                     </svg>
                     <span className="text-red-700">
-                      {formik.errors.password}
+                      {formik.errors.newPassword}
                     </span>
                   </div>
                 ) : null}
               </div>
 
-              <div className="lg:mb-0 flex justify-between items-center">                 
-                  <button
-                    type="submit"
-                    className="flex justify-center rounded-md border border-transparent bg-green-700 hover:bg-green-600 transition-colors py-2.5 md:px-15 px-6 text-[15px] font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-                  >
-                    {isLoading ? (
-                      <i className="fa-duotone fa-solid fa-spinner fa-spin py-0.5"></i>
-                    ) : (
-                      "Login"
-                    )}
-                  </button> 
-                  <Link to={'/forgetPassword'}>
-                  <p
-                    className={`${style.forget} text-[15px] md:text-xl md:mb-0 font-serif text-blue-800 hover:text-blue-600 underline`}
-                  >
-                    Forget Your Password ?
-                  </p>
-                </Link>           
+              <div className="lg:mb-0 flex justify-between items-center">
+                <button
+                  type="submit"
+                  className="flex justify-center rounded-md border border-transparent bg-green-700 hover:bg-green-600 transition-colors py-2.5 md:px-10 px-6 text-[15px] font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                >
+                  {isLoading ? (
+                    <i className="fa-duotone fa-solid fa-spinner fa-spin py-0.5"></i>
+                  ) : (
+                    "Reset Password"
+                  )}
+                </button>
               </div>
               {/* error alert from tailwindflex.com */}
               {errMsg ? (
