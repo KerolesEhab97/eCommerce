@@ -33,7 +33,7 @@ export default function ProductDetails() {
     }
   }
   // ***************************************************
-  let { addToWishlist } = useContext(WishlistContext);
+  let { addToWishlist, wishlistProducts } = useContext(WishlistContext);
 
   async function addProductToWishlist(prodId) {
     let response = await addToWishlist(prodId);
@@ -150,15 +150,12 @@ export default function ProductDetails() {
                 onClick={() => {
                   addProductToWishlist(data?.id);
                 }}
-                className="fa-solid fa-heart text-3xl text-green-900 hover:text-green-600 transition-colors"
+                className={`fa-solid fa-heart text-2xl transition-colors ${
+                  wishlistProducts?.some((item) => item.id == data?.id)
+                    ? "text-red-500"
+                    : "text-green-900 hover:text-green-600"
+                }`}
               ></i>
-            </div>
-
-            <div className="flex justify-between items-center mt-4">
-              <button className="w-5/6 bg-blue-600 hover:bg-blue-500 transition-colors p-2 rounded-3xl text-white">
-                Check Out
-              </button>
-              <i className="fa-regular fa-credit-card text-3xl text-blue-900 hover:text-blue-600 transition-colors"></i>
             </div>
           </div>
         </div>
@@ -204,7 +201,11 @@ export default function ProductDetails() {
                       onClick={() => {
                         addProductToWishlist(prod.id);
                       }}
-                      className="w-full fa-solid fa-heart text-2xl text-green-900 hover:text-green-600 transition-colors"
+                      className={`w-full fa-solid fa-heart text-2xl transition-colors ${
+                        wishlistProducts?.some((item) => item.id == prod.id)
+                          ? "text-red-500"
+                          : "text-green-900 hover:text-green-600"
+                      }`}
                     ></i>
                   </div>
                 </div>

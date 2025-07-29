@@ -33,7 +33,7 @@ export default function RecentProducts() {
   }
   // ! ************************************
   // ***************************************************
-  let { addToWishlist } = useContext(WishlistContext);
+  let { addToWishlist, wishlistProducts } = useContext(WishlistContext);
 
   async function addProductToWishlist(prodId) {
     let response = await addToWishlist(prodId);
@@ -122,7 +122,11 @@ export default function RecentProducts() {
                       onClick={() => {
                         addProductToWishlist(prod.id);
                       }}
-                      className="w-full fa-solid fa-heart text-2xl text-green-900 hover:text-green-600 transition-colors"
+                      className={`w-full fa-solid fa-heart text-2xl  transition-colors ${
+                        wishlistProducts?.some((item) => item.id == prod.id)
+                          ? "text-red-500"
+                          : "text-green-900 hover:text-green-600"
+                      }`}
                     ></i>
                   </div>
                 </div>
